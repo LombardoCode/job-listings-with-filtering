@@ -1,24 +1,26 @@
 <template>
-  <div>
-    <img :src="logo" alt="">
-		<div>
-			<span>{{company}}</span>
-			<span v-if="new_offer">new!</span>
-			<span v-if="featured">featured</span>
+  <div class="card" :class="{'featured': featured}">
+		<div style="position: relative;">
+    	<img :src="logo" class="posicion-imagen">
+		</div>
+		<div class="margin-abajo" style="display: flex; align-items: center;">
+			<span class="colorPrimario semibold separacion-derecha">{{company}}</span>
+			<span v-if="new_offer" class="etiqueta bgPrimario bold separacion-derecha font-sm">new!</span>
+			<span v-if="featured" class="etiqueta bgSecundario bold font-sm">featured</span>
 		</div>
 		<div>
-			<h3>{{position}}</h3>
-			<div>
-				<span>{{postedAt}}</span>
-				<span>{{contract}}</span>
-				<span>{{location}}</span>
-			</div>
-			<div>
-				<span>{{role}}</span>
-				<span>{{level}}</span>
-				<span>{{location}}</span>
-				<span>{{languages}}</span>
-				<span>{{tools}}</span>
+			<h3 class="titular-puesto margin-abajo">{{position}}</h3>
+			<ul class="flex margin-abajo">
+				<li class="flex-item">{{postedAt}}</li>
+				<li class="flex-item">{{contract}}</li>
+				<li class="flex-item">{{location}}</li>
+			</ul>
+			<hr class="margin-hr">
+			<div style="display: flex; flex-wrap: wrap">
+				<span class="colorPrimario semibold separacion-tags">{{role}}</span>
+				<span class="colorPrimario semibold separacion-tags">{{level}}</span>
+				<span v-for="(tool, index) in tools" :key="index" class="colorPrimario semibold separacion-tags">{{tool}}</span>
+				<span v-for="(language, index) in languages" :key="index" class="colorPrimario semibold separacion-tags">{{language}}</span>
 			</div>
 		</div>
   </div>
@@ -44,6 +46,96 @@ export default {
 }
 </script>
 
-<style>
+<style lang="sass" scoped>
+	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap')
+	*
+		font-family: 'Spartan', 'Arial', sans-serif
 
+	$LightGrayishCyanBackground: hsl(180, 52%, 96%)
+	$LightGrayishCyanTablets: hsl(180, 31%, 95%)
+	$DarkGrayishCyan: hsl(180, 8%, 52%)
+	$VeryDarkGrayishCyan: hsl(180, 14%, 20%)
+	$colorPrimario: #31a2a3
+	$colorSecundario: #113436
+	$sombraCard: rgba(41, 134, 135, 0.26)
+
+	.colorPrimario
+		color: $colorPrimario
+
+	.texto-blanco
+		color: #ffffff
+
+	.bgPrimario
+		background-color: $colorPrimario
+
+	.bgSecundario
+		background-color: $colorSecundario
+
+	.semibold
+		font-weight: 700
+
+	.bold
+		font-weight: 800
+
+	.card
+		background-color: #ffffff
+		padding: 44px 18px 0px 24px
+		margin-top: 60px
+		border-radius: 6px
+		box-shadow: 0px 10px 19px 0px $sombraCard
+
+	.posicion-imagen
+		width: 70px
+		position: absolute
+		bottom: 10px
+
+	.featured
+		border-left: 8px solid $colorPrimario
+
+	.etiqueta
+		text-transform: uppercase
+		padding: 0px 10px
+		color: #ffffff
+		border-radius: 9999px
+		line-height: 30px
+
+	.margin-abajo
+		margin-bottom: 12px
+
+	.padding-abajo
+		padding-bottom: 12px
+
+	.separacion-derecha
+		margin-right: 10px
+
+	.flex
+		display: flex
+
+	.flex::child(1)
+		color: red
+
+	.flex-item
+		margin-right: 32px
+
+	.font-sm
+		font-size: 13px
+
+	li
+		color: #696969
+
+	li:nth-child(1)
+		list-style-type: none
+
+	.titular-puesto
+		color: #525252
+
+	.margin-hr
+		margin: 24px 0px
+		background-color: #696969
+		border: none
+		height: 1px
+
+	.separacion-tags
+		margin-right: 16px
+		margin-bottom: 28px
 </style>

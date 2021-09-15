@@ -1,22 +1,24 @@
 <template>
   <div id="app">
 		<vue-header></vue-header>
-    <oferta-laboral
-      v-for="(oferta, index) in datosOfertasLaborales" :key="index"
-			:id="oferta.id"
-			:company="oferta.company"
-			:logo="oferta.logo"
-			:new_offer="oferta.new"
-			:featured="oferta.featured"
-			:position="oferta.position"
-			:role="oferta.role"
-			:level="oferta.level"
-			:postedAt="oferta.postedAt"
-			:contract="oferta.contract"
-			:location="oferta.location"
-			:languages="oferta.languages"
-			:tools="oferta.tools"
-    ></oferta-laboral>
+		<div class="container">
+			<oferta-laboral
+				v-for="(oferta, index) in datosOfertasLaborales" :key="index"
+				:id="oferta.id"
+				:company="oferta.company"
+				:logo="oferta.logo"
+				:new_offer="oferta.new"
+				:featured="oferta.featured"
+				:position="oferta.position"
+				:role="oferta.role"
+				:level="oferta.level"
+				:postedAt="oferta.postedAt"
+				:contract="oferta.contract"
+				:location="oferta.location"
+				:languages="oferta.languages"
+				:tools="oferta.tools"
+			></oferta-laboral>
+		</div>
     <!-- Item Start -->
     Photosnap
     New!
@@ -222,4 +224,7 @@ export default {
 		box-sizing: inherit
 		margin: 0
 		padding: 0
+
+	.container
+		padding: 22px 20px
 </style>
