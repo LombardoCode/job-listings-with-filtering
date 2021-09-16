@@ -21,11 +21,11 @@
 			</div>
 		</div>
 		<hr class="margin-hr">
-		<div style="display: flex; flex-wrap: wrap;">
-			<span class="colorPrimario semibold separacion-tags">{{role}}</span>
-			<span class="colorPrimario semibold separacion-tags">{{level}}</span>
-			<span v-for="(tool, index) in tools" :key="index" class="colorPrimario semibold separacion-tags">{{tool}}</span>
-			<span v-for="(language, index) in languages" :key="index" class="colorPrimario semibold separacion-tags">{{language}}</span>
+		<div class="categorias" style="display: flex; flex-wrap: wrap;">
+			<span class="colorPrimario semibold separacion-tags" @click="guardarCategoria(role)">{{role}}</span>
+			<span class="colorPrimario semibold separacion-tags" @click="guardarCategoria(level)">{{level}}</span>
+			<span v-for="(tool, index) in tools" :key="index + `A`" class="colorPrimario semibold separacion-tags" @click="guardarCategoria(tool)">{{tool}}</span>
+			<span v-for="(language, index) in languages" :key="index + `B`" class="colorPrimario semibold separacion-tags" @click="guardarCategoria(language)">{{language}}</span>
 		</div>
   </div>
 </template>
@@ -46,26 +46,31 @@ export default {
 		location: String,
 		languages: [],
 		tools: [],
+	},
+	methods: {
+		guardarCategoria(categoria) {
+			this.$emit('transferirCategoria', categoria);
+		}
 	}
 }
 </script>
 
 <style lang="sass" scoped>
+	// Fuentes
 	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap')
 	*
 		font-family: 'Spartan', 'Arial', sans-serif
 
-	$LightGrayishCyanBackground: hsl(180, 52%, 96%)
-	$LightGrayishCyanTablets: hsl(180, 31%, 95%)
-	$DarkGrayishCyan: hsl(180, 8%, 52%)
-	$VeryDarkGrayishCyan: hsl(180, 14%, 20%)
-	$colorPrimario: #31a2a3
+	// Colores
+	$colorPrimario: #5DA5A4
 	$colorSecundario: #113436
 	$sombraCard: rgba(41, 134, 135, 0.26)
 
+	// Breakpoints
 	$breakpointMovil: 375px
 	$breakpointEscritorio: 1440px
 
+	// CSS de la página
 	.colorPrimario
 		color: $colorPrimario
 
@@ -111,12 +116,13 @@ export default {
 	.posicion-imagen
 		position: absolute
 		width: 70px
-		bottom: 110px
+		transform: translate(0px, -100px)
 
 	@media screen and (min-width: $breakpointEscritorio)
 		.posicion-imagen
 			position: static
 			padding-right: 110px
+			transform: translate(0px, 0px)
 
 	.featured
 		border-left: 8px solid $colorPrimario
@@ -175,4 +181,16 @@ export default {
 	@media screen and (min-width: $breakpointEscritorio)
 		.separacion-tags
 			margin-bottom: 0px
+
+	.categorias span
+		padding: 0px 10px
+		border-radius: 9999px
+		line-height: 34px
+
+	.categorias span:hover
+		background-color: $colorPrimario
+		color: #ffffff
+		cursor: pointer
+
+
 </style>

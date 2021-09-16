@@ -12,19 +12,23 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
-	$LightGrayishCyanBackground: hsl(180, 52%, 96%)
-	$LightGrayishCyanTablets: hsl(180, 31%, 95%)
-	$DarkGrayishCyan: hsl(180, 8%, 52%)
-	$VeryDarkGrayishCyan: hsl(180, 14%, 20%)
+	$verdeOscuro: #5DA5A4
 
 	$breakpointMovil: 375px
 	$breakpointEscritorio: 1440px
 
 	#fondo-header
-		background-color: $DarkGrayishCyan
+		background-color: $verdeOscuro
+		max-height: 140px
+		overflow: hidden
+
+	#fondo-header img
+		transform: scale(1.2)
 
 	#header-movil
+		width: 100%
+
+	#header-escritorio
 		width: 100%
 
 	@media screen and (max-width: $breakpointEscritorio)

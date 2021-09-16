@@ -2,8 +2,9 @@
   <div id="app">
 		<vue-header></vue-header>
 		<div class="container">
+			<filtros :filtros="categoriasFiltradas"></filtros>
 			<oferta-laboral
-				v-for="(oferta, index) in datosOfertasLaborales" :key="index"
+				v-for="(oferta, index) in ofertasLaborales" :key="index"
 				:id="oferta.id"
 				:company="oferta.company"
 				:logo="oferta.logo"
@@ -17,6 +18,7 @@
 				:location="oferta.location"
 				:languages="oferta.languages"
 				:tools="oferta.tools"
+				@transferirCategoria="administrarCategorias"
 			></oferta-laboral>
 		</div>
     <div class="attribution">
@@ -27,20 +29,31 @@
 </template>
 
 <script>
-import datosOfertasLaborales from './assets/data.json'
+import jsonOfertasLaborales from './assets/data.json'
 import OfertaLaboral from './components/OfertaLaboral'
 import VueHeader from './components/VueHeader.vue'
+import Filtros from './components/Filtros.vue';
+
 export default {
   name: 'App',
   components: {
     OfertaLaboral,
-		VueHeader
+		VueHeader,
+		Filtros
   },
   data() {
     return {
-      datosOfertasLaborales
+      ofertasLaborales: jsonOfertasLaborales,
+			categoriasFiltradas: []
     }
-  }
+  },
+	methods: {
+		administrarCategorias(categoria) {
+			if (!this.categoriasFiltradas.includes(categoria)) {
+				this.categoriasFiltradas.push(categoria);
+			}
+		}
+	}
 }
 </script>
 
