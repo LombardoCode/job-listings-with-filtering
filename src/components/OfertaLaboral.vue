@@ -22,10 +22,10 @@
 		</div>
 		<hr class="margin-hr">
 		<div class="categorias" style="display: flex; flex-wrap: wrap;">
-			<span class="colorPrimario semibold separacion-tags" @click="guardarCategoria(role)">{{role}}</span>
-			<span class="colorPrimario semibold separacion-tags" @click="guardarCategoria(level)">{{level}}</span>
-			<span v-for="(tool, index) in tools" :key="index + `A`" class="colorPrimario semibold separacion-tags" @click="guardarCategoria(tool)">{{tool}}</span>
-			<span v-for="(language, index) in languages" :key="index + `B`" class="colorPrimario semibold separacion-tags" @click="guardarCategoria(language)">{{language}}</span>
+			<span class="colorPrimario semibold separacion-tags">{{role}}</span>
+			<span class="colorPrimario semibold separacion-tags">{{level}}</span>
+			<span v-for="(tool, index) in tools" :key="index + `A`" class="colorPrimario semibold separacion-tags">{{tool}}</span>
+			<span v-for="(language, index) in languages" :key="index + `B`" class="colorPrimario semibold separacion-tags">{{language}}</span>
 		</div>
   </div>
 </template>
@@ -46,11 +46,6 @@ export default {
 		location: String,
 		languages: [],
 		tools: [],
-	},
-	methods: {
-		guardarCategoria(categoria) {
-			this.$emit('transferirCategoria', categoria);
-		}
 	}
 }
 </script>

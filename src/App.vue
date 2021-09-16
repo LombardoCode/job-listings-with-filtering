@@ -2,9 +2,12 @@
   <div id="app">
 		<vue-header></vue-header>
 		<div class="container">
-			<filtros :filtros="categorias"></filtros>
+			<filtros
+				:filtros="categorias"
+				@filtrosSeleccionados="filtrarOfertas"
+			></filtros>
 			<oferta-laboral
-				v-for="(oferta, index) in ofertasLaborales" :key="index"
+				v-for="(oferta, index) in ofertasLaboralesFiltradas" :key="index"
 				:id="oferta.id"
 				:company="oferta.company"
 				:logo="oferta.logo"
@@ -18,7 +21,6 @@
 				:location="oferta.location"
 				:languages="oferta.languages"
 				:tools="oferta.tools"
-				@transferirCategoria="administrarCategorias"
 			></oferta-laboral>
 		</div>
     <div class="attribution">
@@ -44,18 +46,16 @@ export default {
   data() {
     return {
       ofertasLaborales: jsonOfertasLaborales,
-			categorias: []
+			ofertasLaboralesFiltradas: [],
+			categorias: [],
+			filtrosSeleccionados: []
     }
   },
 	mounted() {
+		this.ofertasLaboralesFiltradas = this.ofertasLaborales;
 		this.obtenerCategorias();
 	},
 	methods: {
-		administrarCategorias(categoria) {
-			if (!this.categoriasFiltradas.includes(categoria)) {
-				this.categoriasFiltradas.push(categoria);
-			}
-		},
 		obtenerCategorias() {
 			let categorias = [];
 
@@ -87,7 +87,14 @@ export default {
 			}
 
 			this.categorias = categorias;
-		}
+		},
+		filtrarOfertas(filtros) {
+			let ofertasFiltradas = this.ofertasLaborales.filter(oferta => {
+				return filtros.every(i => oferta.languages.includes(i) || oferta.tools.includes(i) || oferta.level.includes(i) || oferta.role.includes(i));
+			});
+
+			this.ofertasLaboralesFiltradas = ofertasFiltradas;
+		},
 	}
 }
 </script>

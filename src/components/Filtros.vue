@@ -1,11 +1,14 @@
 <template>
 	<div>
-		<input type="text" style="width: 100%; padding: 10px 4px" v-model="busquedaInput" @input="escribiendoCategoria()" placeholder="Escribe una categoría...">
-		<div style="position: relative;">
-			<div style="position: absolute; background-color: #ffffff; z-index: 1; width: 100%;">
-				<div v-for="(filtro, index) in this.categoriasEncontradas" :key="index" class="">
-					<p>{{filtro}}</p>
-				</div>
+		<div id="filtros-seleccionados">
+			<div v-for="(filtroSeleccionado, index) in filtrosSeleccionados" :key="index">
+				<p>{{filtroSeleccionado}}</p>
+			</div>
+		</div>
+		<input type="text" class="input-busqueda" v-model="busquedaInput" @input="escribiendoFiltro()" placeholder="Escribe una categoría...">
+		<div class="resultados-wrapper" style="position: absolute; background-color: #ffffff; z-index: 1; width: 100%;">
+			<div v-for="(filtro, index) in this.filtrosEncontrados" :key="index" class="resultados-filtros" @click="seleccionarFiltro(filtro)">
+				<p>{{filtro}}</p>
 			</div>
 		</div>
 	</div>
@@ -19,17 +22,53 @@ export default {
 	data() {
 		return {
 			busquedaInput: '',
-			categoriasEncontradas: []
+			filtrosEncontrados: [],
+			filtrosSeleccionados: []
 		}
 	},
 	methods: {
-		escribiendoCategoria() {
-			this.categoriasEncontradas = this.filtros.filter(f =>  f.toUpperCase().indexOf(this.busquedaInput.toUpperCase()) > -1 );
+		escribiendoFiltro() {
+			this.filtrosEncontrados = this.filtros.filter(f =>  f.toUpperCase().indexOf(this.busquedaInput.toUpperCase()) > -1 );
+		},
+		seleccionarFiltro(filtro) {
+			if (!this.filtrosSeleccionados.includes(filtro)) {
+				this.filtrosSeleccionados.push(filtro);
+				this.filtrarOfertas();
+			}
+
+			this.busquedaInput = '';
+			this.filtrosEncontrados = [];
+		},
+		filtrarOfertas() {
+			this.$emit('filtrosSeleccionados', this.filtrosSeleccionados);
 		}
 	}
 }
 </script>
 
-<style>
+<style lang="sass" scoped>
+	@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap')
+	*
+		font-family: 'Spartan', 'Arial', sans-serif
+	$colorPrimario: #5DA5A4
 
+	.input-busqueda
+		width: 100%
+		padding: 10px 12px
+		border-radius: 10px
+		border-width: 2px
+		border-color: $colorPrimario
+
+	.resultados-wrapper
+		position: relative
+		border-width: 2px
+		border-color: $colorPrimario
+
+	.resultados-filtros
+		padding: 10px 8px
+
+	.resultados-filtros:hover
+		background-color: $colorPrimario
+		color: #ffffff
+		cursor: pointer
 </style>
