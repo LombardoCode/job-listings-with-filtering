@@ -2,7 +2,7 @@
   <div id="app">
 		<vue-header></vue-header>
 		<div class="container">
-			<filtros :filtros="categoriasFiltradas"></filtros>
+			<filtros :filtros="categorias"></filtros>
 			<oferta-laboral
 				v-for="(oferta, index) in ofertasLaborales" :key="index"
 				:id="oferta.id"
@@ -44,14 +44,49 @@ export default {
   data() {
     return {
       ofertasLaborales: jsonOfertasLaborales,
-			categoriasFiltradas: []
+			categorias: []
     }
   },
+	mounted() {
+		this.obtenerCategorias();
+	},
 	methods: {
 		administrarCategorias(categoria) {
 			if (!this.categoriasFiltradas.includes(categoria)) {
 				this.categoriasFiltradas.push(categoria);
 			}
+		},
+		obtenerCategorias() {
+			let categorias = [];
+
+			for (let i = 0; i < jsonOfertasLaborales.length; i++) {
+				const languages = jsonOfertasLaborales[i].languages;
+				const tools = jsonOfertasLaborales[i].tools;
+				const level = jsonOfertasLaborales[i].level;
+				const role = jsonOfertasLaborales[i].role;
+
+				languages.forEach(e => {
+					if (!categorias.includes(e)) {
+						categorias.push(e);
+					}
+				});
+
+				tools.forEach(e => {
+					if (!categorias.includes(e)) {
+						categorias.push(e);
+					}
+				});
+
+				if (!categorias.includes(level)) {
+					categorias.push(level)
+				}
+
+				if (!categorias.includes(role)) {
+					categorias.push(role)
+				}
+			}
+
+			this.categorias = categorias;
 		}
 	}
 }
