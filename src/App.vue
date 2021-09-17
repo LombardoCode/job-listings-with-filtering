@@ -3,8 +3,10 @@
 		<vue-header></vue-header>
 		<div class="container">
 			<filtros
-				:filtros="categorias"
+				:filtros_totales="filtros_totales"
+				:filtrosSeleccionados="filtrosSeleccionados"
 				@filtrosSeleccionados="filtrarOfertas"
+				@filtroEliminado="eliminarFiltro"
 			></filtros>
 			<oferta-laboral
 				v-for="(oferta, index) in ofertasLaboralesFiltradas" :key="index"
@@ -47,17 +49,17 @@ export default {
     return {
       ofertasLaborales: jsonOfertasLaborales,
 			ofertasLaboralesFiltradas: [],
-			categorias: [],
+			filtros_totales: [],
 			filtrosSeleccionados: []
     }
   },
 	mounted() {
 		this.ofertasLaboralesFiltradas = this.ofertasLaborales;
-		this.obtenerCategorias();
+		this.obtenerFiltros();
 	},
 	methods: {
-		obtenerCategorias() {
-			let categorias = [];
+		obtenerFiltros() {
+			let filtros = [];
 
 			for (let i = 0; i < jsonOfertasLaborales.length; i++) {
 				const languages = jsonOfertasLaborales[i].languages;
@@ -66,27 +68,27 @@ export default {
 				const role = jsonOfertasLaborales[i].role;
 
 				languages.forEach(e => {
-					if (!categorias.includes(e)) {
-						categorias.push(e);
+					if (!filtros.includes(e)) {
+						filtros.push(e);
 					}
 				});
 
 				tools.forEach(e => {
-					if (!categorias.includes(e)) {
-						categorias.push(e);
+					if (!filtros.includes(e)) {
+						filtros.push(e);
 					}
 				});
 
-				if (!categorias.includes(level)) {
-					categorias.push(level)
+				if (!filtros.includes(level)) {
+					filtros.push(level)
 				}
 
-				if (!categorias.includes(role)) {
-					categorias.push(role)
+				if (!filtros.includes(role)) {
+					filtros.push(role)
 				}
 			}
 
-			this.categorias = categorias;
+			this.filtros_totales = filtros;
 		},
 		filtrarOfertas(filtros) {
 			let ofertasFiltradas = this.ofertasLaborales.filter(oferta => {
@@ -94,7 +96,13 @@ export default {
 			});
 
 			this.ofertasLaboralesFiltradas = ofertasFiltradas;
+			this.filtrosSeleccionados = filtros;
 		},
+		eliminarFiltro(filtroAEliminar) {
+			let index = this.filtrosSeleccionados.indexOf(filtroAEliminar);
+			this.filtrosSeleccionados.splice(index, 1);
+			this.filtrarOfertas(this.filtrosSeleccionados);
+		}
 	}
 }
 </script>

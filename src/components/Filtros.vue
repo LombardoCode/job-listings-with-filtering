@@ -5,7 +5,7 @@
 				<div class="nombre-filtro">
 					{{filtroSeleccionado}}
 				</div>
-				<div class="boton-eliminar">X</div>
+				<div class="boton-eliminar" @click="eliminarFiltro(filtroSeleccionado)">X</div>
 			</div>
 		</div>
 		<input type="text" class="input-busqueda" v-model="busquedaInput" @input="escribiendoFiltro()" placeholder="Escribe una categoría...">
@@ -20,18 +20,18 @@
 <script>
 export default {
 	props: {
-		filtros: []
+		filtros_totales: [],
+		filtrosSeleccionados: []
 	},
 	data() {
 		return {
 			busquedaInput: '',
-			filtrosEncontrados: [],
-			filtrosSeleccionados: []
+			filtrosEncontrados: []
 		}
 	},
 	methods: {
 		escribiendoFiltro() {
-			this.filtrosEncontrados = this.filtros.filter(f =>  f.toUpperCase().indexOf(this.busquedaInput.toUpperCase()) > -1 );
+			this.filtrosEncontrados = this.filtros_totales.filter(f =>  f.toUpperCase().indexOf(this.busquedaInput.toUpperCase()) > -1 );
 		},
 		seleccionarFiltro(filtro) {
 			if (!this.filtrosSeleccionados.includes(filtro)) {
@@ -44,6 +44,9 @@ export default {
 		},
 		filtrarOfertas() {
 			this.$emit('filtrosSeleccionados', this.filtrosSeleccionados);
+		},
+		eliminarFiltro(filtroAEliminar) {
+			this.$emit('filtroEliminado', filtroAEliminar);
 		}
 	}
 }
