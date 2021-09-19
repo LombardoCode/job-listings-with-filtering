@@ -1,7 +1,7 @@
 <template>
 	<div id="fondo-header">
-		<img id="header-movil" src="/images/bg-header-mobile.svg" alt="">
-		<img id="header-escritorio" src="/images/bg-header-desktop.svg" alt="">
+		<img id="header-movil" src="images/bg-header-mobile.svg" alt="">
+		<img id="header-escritorio" src="images/bg-header-desktop.svg" alt="">
 	</div>
 </template>
 
