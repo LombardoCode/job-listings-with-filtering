@@ -25,25 +25,24 @@
 				:tools="oferta.tools"
 			></oferta-laboral>
 		</div>
-    <div class="attribution">
-      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
-      Coded by <a href="#">Your Name Here</a>.
-    </div>
+		<vue-footer></vue-footer>
   </div>
 </template>
 
 <script>
-import jsonOfertasLaborales from './assets/data.json'
-import OfertaLaboral from './components/OfertaLaboral'
-import VueHeader from './components/VueHeader.vue'
+import jsonOfertasLaborales from './assets/data.json';
+import OfertaLaboral from './components/OfertaLaboral';
+import VueHeader from './components/VueHeader.vue';
 import Filtros from './components/Filtros.vue';
+import VueFooter from './components/VueFooter.vue';
 
 export default {
   name: 'App',
   components: {
     OfertaLaboral,
 		VueHeader,
-		Filtros
+		Filtros,
+		VueFooter
   },
   data() {
     return {
@@ -119,5 +118,31 @@ export default {
 		padding: 0
 
 	.container
+		width: 100%
 		padding: 22px 20px
+
+	@media screen and (min-width: 640px)
+		.container
+			max-width: 640px
+			margin: 0 auto
+
+	@media screen and (min-width: 768px)
+		.container
+			max-width: 768px
+			margin: 0 auto
+
+	@media screen and (min-width: 1024px)
+		.container
+			max-width: 1024px
+			margin: 0 auto
+
+	@media screen and (min-width: 1280px)
+		.container
+			max-width: 1280px
+			margin: 0 auto
+
+	@media screen and (min-width: 1536px)
+		.container
+			max-width: 1536px
+			margin: 0 auto
 </style>

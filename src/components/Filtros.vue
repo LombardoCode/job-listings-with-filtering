@@ -8,10 +8,15 @@
 				<div class="boton-eliminar" @click="eliminarFiltro(filtroSeleccionado)">X</div>
 			</div>
 		</div>
-		<input type="text" class="input-busqueda" v-model="busquedaInput" @input="escribiendoFiltro()" placeholder="Escribe una categoría...">
-		<div class="resultados-wrapper" style="position: absolute; background-color: #ffffff; z-index: 1; width: 100%;">
-			<div v-for="(filtro, index) in this.filtrosEncontrados" :key="index" class="resultados-filtros" @click="seleccionarFiltro(filtro)">
-				<p>{{filtro}}</p>
+		<input type="text" class="input-busqueda" :class="{'input-busqueda-vacio': busquedaInput.length == 0, 'input-busqueda-lleno': busquedaInput.length != 0}" v-model="busquedaInput" @input="escribiendoFiltro()" placeholder="Escribe una categoría...">
+		<div class="resultados-wrapper" v-if="busquedaInput.length > 0">
+			<div v-if="filtrosEncontrados.length > 0">
+				<div v-for="(filtro, index) in this.filtrosEncontrados" :key="index" class="resultados-filtros" @click="seleccionarFiltro(filtro)">
+					<p>{{filtro}}</p>
+				</div>
+			</div>
+			<div v-else class="sin-resultados">
+				<span>No se encontraron resultados</span>
 			</div>
 		</div>
 	</div>
@@ -31,7 +36,10 @@ export default {
 	},
 	methods: {
 		escribiendoFiltro() {
-			this.filtrosEncontrados = this.filtros_totales.filter(f =>  f.toUpperCase().indexOf(this.busquedaInput.toUpperCase()) > -1 );
+			this.filtrosEncontrados = this.filtros_totales.filter(f =>
+			f.toUpperCase().indexOf(this.busquedaInput.toUpperCase()) > -1
+			&& this.filtrosSeleccionados.indexOf(f) == -1
+			);
 		},
 		seleccionarFiltro(filtro) {
 			if (!this.filtrosSeleccionados.includes(filtro)) {
@@ -62,16 +70,26 @@ export default {
 	.input-busqueda
 		width: 100%
 		padding: 10px 12px
+		border: 3px solid $colorPrimario
+		outline: none
+
+	.input-busqueda-vacio
 		border-radius: 10px
-		border-width: 2px
-		border-color: $colorPrimario
+
+	.input-busqueda-lleno
+		border-radius: 10px 10px 0px 0px
 
 	.resultados-wrapper
-		position: relative
-		border-width: 2px
-		border-color: $colorPrimario
+		background-color: #ffffff
+		z-index: 1
+		width: 100%
+		border-right: 3px solid $colorPrimario
+		border-bottom: 3px solid $colorPrimario
+		border-left: 3px solid $colorPrimario
+		border-radius: 0px 0px 10px 10px
 
 	.resultados-filtros
+		position: realtive
 		padding: 10px 8px
 
 	.resultados-filtros:hover
@@ -81,6 +99,16 @@ export default {
 
 	.filtros-wrapper
 		margin-bottom: 14px
+
+	.sin-resultados
+		padding: 10px 8px
+		color: #525252
+		-webkit-touch-callout: none
+		-webkit-user-select: none
+		-khtml-user-select: none
+		-moz-user-select: none
+		-ms-user-select: none
+		user-select: none
 
 	.filtroSeleccionado
 		display: flex
