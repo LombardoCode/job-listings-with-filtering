@@ -1,6 +1,6 @@
 # job-listings-with-filtering
 
-[Read this page in English](https://github.com/LombardoCode/job-listings-with-filtering/blob/master/README/README.en-US.md)
+🇬🇧 [Read this page in English](https://github.com/LombardoCode/job-listings-with-filtering/blob/master/README/README.en.md)
 
 ## Demostración
 Puede acceder a una demostración del proyecto haciendo clic [aquí](https://job-listings-with-filtering.herokuapp.com/).
